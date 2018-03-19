@@ -1,1 +1,93 @@
-<h1>{{usuario?.name}}</h1>
+<section class="content-header">
+</section>
+
+<section class="content">
+  <section class="invoice">
+
+    <form [formGroup]="usuarioForm" novalidate>
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="page-header">
+            <i class="fa fa-shopping-cart"></i> Cadastre um novo usuário
+          </h2>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-6 col-xs-12">
+          <cad-input-container errorMessage="Campo obrigatório e com 5 caracteres no mínimo" label="Nome">
+            <input class="form-control" formControlName="name" placeholder="Nome *" autocomplete="off">
+          </cad-input-container>
+        </div>
+
+        <div class="col-sm-6 col-xs-6">
+          <cad-input-container errorMessage="CPF/CNPJ inválido" label="CPF/CNPJ">
+            <input type="text" class="form-control" formControlName="federalId" placeholder="CPF/CNPJ *" autocomplete="off">
+          </cad-input-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 col-xs-6">
+          <cad-input-container errorMessage="RG inválido" label="RG">
+            <input type="text" class="form-control" formControlName="registration" placeholder="RG" autocomplete="off">
+          </cad-input-container>
+        </div>
+
+        <div class="col-sm-6 col-xs-6">
+          <cad-input-container errorMessage="E-mail inválido" label="E-mail">
+            <input type="text" class="form-control" formControlName="email" placeholder="E-mail *" autocomplete="off">
+          </cad-input-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 col-xs-6">
+          <cad-input-container errorMessage="Celular 1 inválido" label="Celular 1">
+            <input type="text" class="form-control" formControlName="phone" placeholder="Celular 1 *" autocomplete="off">
+          </cad-input-container>
+        </div>
+
+        <div class="col-sm-6 col-xs-6">
+          <cad-input-container errorMessage="Celular 2 inválido" label="Celular 2">
+            <input type="text" class="form-control" formControlName="phone2" placeholder="Celular 2" autocomplete="off">
+          </cad-input-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 col-xs-6">
+          <cad-input-container errorMessage="Telefone residencial inválido" label="Telefone Residencial">
+            <input type="text" class="form-control" formControlName="residencialPhone" placeholder="Fone Residencial" autocomplete="off">
+          </cad-input-container>
+        </div>
+
+        <div class="col-sm-6 col-xs-6">
+          <cad-input-container errorMessage="Telefone Comercial inválido" label="Telefone Comercial">
+            <input type="text" class="form-control" formControlName="commercialPhone" placeholder="Fone Comercial" autocomplete="off">
+          </cad-input-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-xs-12">
+          <cad-input-container errorMessage="Email de Cobrança inválido" label="Email de Cobranca">
+            <input type="text" class="form-control" formControlName="emailCollection" placeholder="E-mail de Cobrança(use ; para separar os e-mails) *"
+              autocomplete="off">
+          </cad-input-container>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="pull-left">Campos Obrigatórios *</p>
+        <button (click)="submeterForm(usuarioForm.value)" class="btn btn-success pull-right" [disabled]="!usuarioForm.valid">
+          <i class="fa fa-credit-card"></i> Concluir
+        </button>
+      </div>
+    </div>
+
+  </section>
+</section>

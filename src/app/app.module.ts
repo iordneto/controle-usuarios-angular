@@ -13,6 +13,8 @@ import { SobreComponent } from './sobre/sobre.component';
 import { UsuarioComponent } from './usuarios/usuario/usuario.component';
 import { UsuariosService } from './usuarios/usuarios.service';
 import { HttpModule } from '@angular/http';
+import { InputComponent } from './compartilhado/input/input.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,12 @@ import { HttpModule } from '@angular/http';
     HeaderComponent,
     UsuariosComponent,
     SobreComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    InputComponent
   ],
   imports: [
+    FormsModule, 
+    ReactiveFormsModule,
     BrowserModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules}),

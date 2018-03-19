@@ -12,7 +12,7 @@ export interface Usuario {
 
     id: number
     name: string
-    federalID: string
+    federalId: string
     registration: string
     phone: string
     phone2: string

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Http } from '@angular/http'
+import { Http, Headers, RequestOptions } from '@angular/http'
 
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map'
@@ -26,5 +26,15 @@ export class UsuariosService {
         return this.http.get(`${BASE_URL_API}/customer/${id}`)
             .map(response => response.json().data.customer)
             .catch(ErrorHandler.handleError)
+    }
+
+    inserir(usuario: Usuario): Observable<Usuario> {
+        const headers = new Headers()
+        headers.append('Content-Type', 'application/json')
+        return this.http.post(`${BASE_URL_API}/customer`,
+                              JSON.stringify(usuario),
+                              new RequestOptions({headers: headers}))
+                        .map(response=> response.json())
+                        .map(order => order.id)
     }
 }
