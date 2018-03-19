@@ -27,7 +27,7 @@
             <td>{{usuario.email}}</td>
             <td>{{usuario.phone}}</td>
             <td>{{usuario.email}}</td>
-            <td>{{usuario.active}}</td>
+            <td><button class= "btn btn-block btn-{{usuario.active ? 'success' : 'danger'}}" >{{usuario.active ? 'Ativo' : 'Inativo'}}</button> </td>
             <th></th>
           </tr>
         </tbody>
