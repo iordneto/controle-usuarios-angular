@@ -19,4 +19,12 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() {
     this.usuarios = this.usuariosService.usuarios()
   }
+
+  removeUsuario(id: number) {
+    console.log("remove: " + id)
+  }
+
+  editaUsuario(id: number) {
+    console.log("edita: " + id)
+  }
 }

@@ -21,4 +21,10 @@ export class UsuariosService {
             .map(response => response.json().data.customerList)
             .catch(ErrorHandler.handleError)
     }
+
+    usuarioPorId(id: number): Observable<Usuario> {
+        return this.http.get(`${BASE_URL_API}/customer/${id}`)
+            .map(response => response.json().data.customer)
+            .catch(ErrorHandler.handleError)
+    }
 }

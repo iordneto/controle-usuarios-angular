@@ -26,9 +26,18 @@
             <td>{{usuario.federalId}}</td>
             <td>{{usuario.email}}</td>
             <td>{{usuario.phone}}</td>
-            <td>{{usuario.email}}</td>
-            <td><button class= "btn btn-block btn-{{usuario.active ? 'success' : 'danger'}}" >{{usuario.active ? 'Ativo' : 'Inativo'}}</button> </td>
-            <th></th>
+            <td>Florianópolis, SC</td>
+            <td>
+              <button class="btn btn-block btn-{{usuario.active ? 'success' : 'danger'}}">{{usuario.active ? 'Ativo' : 'Inativo'}}</button>
+            </td>
+            <th class="colunaBotoesAcao">
+              <button (click)="editaUsuario(usuario.id)" class="btn btn-warning">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button (click)="removeUsuario(usuario.id)" class="btn btn-danger">
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </th>
           </tr>
         </tbody>
       </table>
