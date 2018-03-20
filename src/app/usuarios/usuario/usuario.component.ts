@@ -23,6 +23,7 @@ export class UsuarioComponent implements OnInit {
   federalIDPattern = /(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/
 
   modoEdicao: boolean
+  delay: boolean
 
   constructor(
     private usuariosService: UsuariosService,
@@ -60,6 +61,7 @@ export class UsuarioComponent implements OnInit {
 
       this.usuariosService.usuarioPorId(this.route.snapshot.params['id'])
         .subscribe(usuario => {
+          this.usuario = usuario
           this.usuarioForm.patchValue(usuario)
           this.usuarioForm.get('federalId').disable()
         }
@@ -118,6 +120,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   submeterForm(usuario: Usuario) {
+    this.delay = true;
     if (usuario.id) {
       this.usuariosService.atualizar(usuario)
         .subscribe(usuario => {

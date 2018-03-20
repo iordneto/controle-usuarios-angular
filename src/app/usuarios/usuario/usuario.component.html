@@ -1,9 +1,11 @@
 <section class="content-header">
+  <div *ngIf="!usuario && modoEdicao" class="overlay">
+    <i class="fa fa-refresh fa-spin"></i> Carregando informações...
+  </div>
 </section>
 
 <section class="content">
-  <section class="invoice">
-    
+  <section *ngIf="usuario || !modoEdicao" class="invoice">
     <form [formGroup]="usuarioForm" novalidate>
       <div class="row">
         <div class="col-xs-12">
@@ -25,7 +27,8 @@
         <div class="col-sm-1 col-xs-12">
           <cad-input-container errorMessage="Deve ser escolhido CPF ou CNPJ" label="Nome">
             <mat-radio-group formControlName="federalIdType">
-              <mat-radio-button (click)="limpaCpfCnpj()" value="Physical">CPF</mat-radio-button><br>
+              <mat-radio-button (click)="limpaCpfCnpj()" value="Physical">CPF</mat-radio-button>
+              <br>
               <mat-radio-button (click)="limpaCpfCnpj()" value="Juridical">CNPJ</mat-radio-button>
             </mat-radio-group>
           </cad-input-container>
@@ -39,14 +42,16 @@
 
         <div class="col-sm-4 col-xs-6">
           <cad-input-container errorMessage="CPF/CNPJ inválido" label="CPF/CNPJ">
-            <input type="text" class="form-control" formControlName="federalId" placeholder="CPF/CNPJ *" autocomplete="off" dropSpecialCharacters="false" [mask]="mascaraCPFCNPJ()" >
+            <input type="text" class="form-control" formControlName="federalId" placeholder="CPF/CNPJ *" autocomplete="off" dropSpecialCharacters="false"
+              [mask]="mascaraCPFCNPJ()">
           </cad-input-container>
         </div>
 
         <div class="col-sm-2 col-xs-12">
           <cad-input-container errorMessage="Deve ser escolhido sexo masculino ou feminino" label="Nome">
             <mat-radio-group formControlName="gender">
-              <mat-radio-button value="M">Maculino</mat-radio-button><br>
+              <mat-radio-button value="M">Maculino</mat-radio-button>
+              <br>
               <mat-radio-button value="F">Feminino</mat-radio-button>
             </mat-radio-group>
           </cad-input-container>
@@ -108,7 +113,10 @@
     </form>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div *ngIf="delay" class="col-xs-12 overlay">
+        <i class="fa fa-refresh fa-spin"></i> Enviando informações...
+      </div>
+      <div *ngIf="!delay" class="col-xs-12">
         <p class="pull-left">Campos Obrigatórios *</p>
         <div class="pull-right">
           <button [routerLink]="['/usuarios']" class="btn btn-default" [disabled]="!usuarioForm.valid">
@@ -122,4 +130,5 @@
     </div>
 
   </section>
+
 </section>
