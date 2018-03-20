@@ -21,17 +21,15 @@ export class UsuarioComponent implements OnInit {
   datePattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/
   federalIDPattern = /(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/
 
+  modoEdicao: boolean
+
   constructor(
     private usuariosService: UsuariosService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder) { }
-
-  ngOnInit() {
-    this.usuariosService.usuarioPorId(this.route.snapshot.params['id'])
-      .subscribe(usuario => this.usuario = usuario)
-
+    private formBuilder: FormBuilder) {
     this.usuarioForm = this.formBuilder.group({
+      id:this.formBuilder.control(0),
       name: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
       federalId: this.formBuilder.control('', [Validators.required, Validators.pattern(this.federalIDPattern)]),
       registration: this.formBuilder.control(''),
@@ -55,6 +53,20 @@ export class UsuarioComponent implements OnInit {
       })
   }
 
+  ngOnInit() {
+    let id = this.route.snapshot.params['id']
+    if (id) {
+      this.modoEdicao = true
+
+      this.usuariosService.usuarioPorId(this.route.snapshot.params['id'])
+        .subscribe(usuario => {
+          this.usuarioForm.patchValue(usuario)
+          this.usuarioForm.get('federalId').disable()
+        }
+      )
+    }
+  }
+
   static validaCpfCnpj(group: AbstractControl): { [key: string]: boolean } {
     return undefined
   }
@@ -63,11 +75,18 @@ export class UsuarioComponent implements OnInit {
     return undefined
   }
 
-  submeterForm(usuario: Usuario){
-    this.usuariosService.inserir(usuario)
-      .subscribe( usuario => {
-        this.router.navigate(['/usuarios'])
-    })
-    console.log(usuario)
+  submeterForm(usuario: Usuario) {
+    if (usuario.id) {
+      this.usuariosService.atualizar(usuario)
+        .subscribe(usuario => {
+          this.router.navigate(['/usuarios'])
+        })
+
+    } else {
+      this.usuariosService.inserir(usuario)
+        .subscribe(usuario => {
+          this.router.navigate(['/usuarios'])
+        })
+    }
   }
 }

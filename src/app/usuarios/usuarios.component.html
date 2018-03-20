@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let usuario of usuarios | async">
+          <tr *ngFor="let usuario of usuarios">
             <td>{{usuario.name}}</td>
             <td>{{usuario.federalId}}</td>
             <td>{{usuario.email}}</td>
@@ -31,10 +31,10 @@
               <button class="btn btn-block btn-{{usuario.active ? 'success' : 'danger'}}">{{usuario.active ? 'Ativo' : 'Inativo'}}</button>
             </td>
             <th class="colunaBotoesAcao">
-              <button (click)="editaUsuario(usuario.id)" class="btn btn-warning">
+              <button [routerLink]="['/usuarios', usuario.id]" class="btn btn-warning">
                 <i class="fa fa-pencil"></i>
               </button>
-              <button (click)="removeUsuario(usuario.id)" class="btn btn-danger">
+              <button (click)="removeUsuario(usuario)" class="btn btn-danger">
                 <i class="fa fa-trash-o"></i>
               </button>
             </th>

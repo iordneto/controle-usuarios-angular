@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class UsuariosComponent implements OnInit {
 
-  usuarios: Observable<Usuario[]>
+  usuarios: Usuario[]
   dtTrigger: Subject<any> = new Subject();
 
   constructor(
@@ -20,15 +20,20 @@ export class UsuariosComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.usuarios = this.usuariosService.usuarios()
+    this.usuariosService.usuarios().subscribe(usuarios => this.usuarios = usuarios)
   }
 
-  removeUsuario(id: number) {
-    console.log("remove: " + id)
-    //this.router.navigate([`/usuarios/${id}`])
-  }
+  removeUsuario(usuario){
+    if (confirm("Você tem certeza que gostaria de deletar o usuario " 
+            + usuario.name + "?")) {
+      var index = this.usuarios.indexOf(usuario);
+      this.usuarios.splice(index, 1);
 
-  editaUsuario(id: number) {
-    console.log("edita: " + id)
+      this.usuariosService.deletar(usuario.id)
+        .subscribe(null,
+          err => {
+            this.usuarios.splice(index, 0, usuario);
+          });
+    }
   }
 }

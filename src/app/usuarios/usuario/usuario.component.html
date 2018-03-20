@@ -8,13 +8,13 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-shopping-cart"></i> Cadastre um novo usuário
+            <i class="fa fa-shopping-cart"></i> {{modoEdicao ? "Editar Usuário": "Cadastre um novo usuário"}}
           </h2>
         </div>
       </div>
 
       <div class="row">
-
+        
         <div class="col-sm-6 col-xs-12">
           <cad-input-container errorMessage="Campo obrigatório e com 5 caracteres no mínimo" label="Nome">
             <input class="form-control" formControlName="name" placeholder="Nome *" autocomplete="off">
@@ -83,7 +83,7 @@
     <div class="row">
       <div class="col-xs-12">
         <p class="pull-left">Campos Obrigatórios *</p>
-        <button (click)="submeterForm(usuarioForm.value)" class="btn btn-success pull-right" [disabled]="!usuarioForm.valid">
+        <button (click)="submeterForm(usuarioForm.getRawValue())" class="btn btn-success pull-right" [disabled]="!usuarioForm.valid">
           <i class="fa fa-credit-card"></i> Concluir
         </button>
       </div>

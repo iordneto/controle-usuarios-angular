@@ -32,9 +32,25 @@ export class UsuariosService {
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
         return this.http.post(`${BASE_URL_API}/customer`,
-                              JSON.stringify(usuario),
-                              new RequestOptions({headers: headers}))
-                        .map(response=> response.json())
-                        .map(order => order.id)
+            JSON.stringify(usuario),
+            new RequestOptions({ headers: headers }))
+            .map(response => response.json())
+            .map(order => order.id)
+    }
+
+    deletar(id: number) {
+        return this.http.delete(`${BASE_URL_API}/customer/${id}`)
+            .map(response => response.json())
+            .catch(ErrorHandler.handleError);
+    }
+
+    atualizar(usuario: Usuario): Observable<Usuario> {
+        const headers = new Headers()
+        headers.append('Content-Type', 'application/json')
+        return this.http.put(`${BASE_URL_API}/customer`,
+            JSON.stringify(usuario),
+            new RequestOptions({ headers: headers }))
+            .map(response => response.json())
+            .catch(ErrorHandler.handleError);;
     }
 }
