@@ -1,9 +1,9 @@
-enum Sexo {
+export enum Genero {
   masculino ='M',
   feminino = 'F'
 }
 
-enum TipoPessoa {
+export enum TipoPessoa {
   fisica = 'Physical',
   juridica = 'Juridical'
 }
@@ -23,7 +23,7 @@ export interface Usuario {
     emergencyContact: string
     emergencyPhone: string
     birthday: Date
-    gender: Sexo
+    gender: Genero
     federalIdType: TipoPessoa
     commercialAddress: any,
     residentialAddress: any,

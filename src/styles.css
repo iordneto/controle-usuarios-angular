@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+.colunaBotoesAcao {
+    text-align: center;
+}
+
+.linhaStatus {
+    margin-bottom: 20px;
+}
+
+.labelStatus {
+    margin-left: 5px;
+    margin-top: 5px;
+}

@@ -13,17 +13,42 @@
         </div>
       </div>
 
-      <div class="row">
-        
+      <div class="row linhaStatus">
         <div class="col-sm-6 col-xs-12">
+          <mat-slide-toggle formControlName="active" class="example-margin" [color]="accent" [checked]="usuarioForm.controls.active.value">
+            {{usuarioForm.controls.active.value ? "Ativo" : "Inativo"}}
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1 col-xs-12">
+          <cad-input-container errorMessage="Deve ser escolhido CPF ou CNPJ" label="Nome">
+            <mat-radio-group formControlName="federalIdType">
+              <mat-radio-button value="Physical">CPF</mat-radio-button><br>
+              <mat-radio-button value="Juridical">CNPJ</mat-radio-button>
+            </mat-radio-group>
+          </cad-input-container>
+        </div>
+
+        <div class="col-sm-5 col-xs-12">
           <cad-input-container errorMessage="Campo obrigatório e com 5 caracteres no mínimo" label="Nome">
             <input class="form-control" formControlName="name" placeholder="Nome *" autocomplete="off">
           </cad-input-container>
         </div>
 
-        <div class="col-sm-6 col-xs-6">
+        <div class="col-sm-4 col-xs-6">
           <cad-input-container errorMessage="CPF/CNPJ inválido" label="CPF/CNPJ">
-            <input type="text" class="form-control" formControlName="federalId" placeholder="CPF/CNPJ *" autocomplete="off">
+            <input type="text" class="form-control" formControlName="federalId" placeholder="CPF/CNPJ *" autocomplete="off" [mask]="mascaraCPFCNPJ()" >
+          </cad-input-container>
+        </div>
+
+        <div class="col-sm-2 col-xs-12">
+          <cad-input-container errorMessage="Deve ser escolhido sexo masculino ou feminino" label="Nome">
+            <mat-radio-group formControlName="gender">
+              <mat-radio-button value="M">Maculino</mat-radio-button><br>
+              <mat-radio-button value="F">Feminino</mat-radio-button>
+            </mat-radio-group>
           </cad-input-container>
         </div>
       </div>
@@ -45,13 +70,13 @@
       <div class="row">
         <div class="col-sm-6 col-xs-6">
           <cad-input-container errorMessage="Celular 1 inválido" label="Celular 1">
-            <input type="text" class="form-control" formControlName="phone" placeholder="Celular 1 *" autocomplete="off">
+            <input type="text" class="form-control" formControlName="phone" placeholder="Celular 1 *" autocomplete="off" mask="(00) 0 0000-0000">
           </cad-input-container>
         </div>
 
         <div class="col-sm-6 col-xs-6">
           <cad-input-container errorMessage="Celular 2 inválido" label="Celular 2">
-            <input type="text" class="form-control" formControlName="phone2" placeholder="Celular 2" autocomplete="off">
+            <input type="text" class="form-control" formControlName="phone2" placeholder="Celular 2" autocomplete="off" mask="(00) 0 0000-0000">
           </cad-input-container>
         </div>
       </div>
@@ -59,13 +84,15 @@
       <div class="row">
         <div class="col-sm-6 col-xs-6">
           <cad-input-container errorMessage="Telefone residencial inválido" label="Telefone Residencial">
-            <input type="text" class="form-control" formControlName="residencialPhone" placeholder="Fone Residencial" autocomplete="off">
+            <input type="text" class="form-control" formControlName="residencialPhone" placeholder="Fone Residencial" autocomplete="off"
+              mask="(00) 0000-0000">
           </cad-input-container>
         </div>
 
         <div class="col-sm-6 col-xs-6">
           <cad-input-container errorMessage="Telefone Comercial inválido" label="Telefone Comercial">
-            <input type="text" class="form-control" formControlName="commercialPhone" placeholder="Fone Comercial" autocomplete="off">
+            <input type="text" class="form-control" formControlName="commercialPhone" placeholder="Fone Comercial" autocomplete="off"
+              mask="(00) 0000-0000">
           </cad-input-container>
         </div>
       </div>
@@ -83,9 +110,14 @@
     <div class="row">
       <div class="col-xs-12">
         <p class="pull-left">Campos Obrigatórios *</p>
-        <button (click)="submeterForm(usuarioForm.getRawValue())" class="btn btn-success pull-right" [disabled]="!usuarioForm.valid">
-          <i class="fa fa-credit-card"></i> Concluir
-        </button>
+        <div class="pull-right">
+          <button [routerLink]="['/usuarios']" class="btn btn-default" [disabled]="!usuarioForm.valid">
+            Cancelar
+          </button>
+          <button (click)="submeterForm(usuarioForm.getRawValue())" class="btn btn-success" [disabled]="!usuarioForm.valid">
+            Salvar
+          </button>
+        </div>
       </div>
     </div>
 

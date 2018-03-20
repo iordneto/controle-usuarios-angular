@@ -7,9 +7,8 @@ import { UsuarioComponent } from './usuarios/usuario/usuario.component';
 export const ROUTES: Routes = [
   { path: '', component: UsuariosComponent },
 
-  { path: 'usuario', component: UsuarioComponent },
-
   { path: 'usuarios', component: UsuariosComponent },
+  { path: 'usuarios/novo', component: UsuarioComponent },
   { path: 'usuarios/:id', component: UsuarioComponent },
   
   { path: 'sobre', component: SobreComponent }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms'
 
-import { Usuario } from './usuario.model';
+import { Usuario, TipoPessoa, Genero } from './usuario.model';
 import { UsuariosService } from '../usuarios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -29,7 +29,7 @@ export class UsuarioComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder) {
     this.usuarioForm = this.formBuilder.group({
-      id:this.formBuilder.control(0),
+      id: this.formBuilder.control(0),
       name: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
       federalId: this.formBuilder.control('', [Validators.required, Validators.pattern(this.federalIDPattern)]),
       registration: this.formBuilder.control(''),
@@ -42,8 +42,8 @@ export class UsuarioComponent implements OnInit {
       emergencyContact: this.formBuilder.control(null),
       emergencyPhone: this.formBuilder.control(null),
       birthday: this.formBuilder.control(null, [Validators.pattern(this.datePattern)]),
-      gender: this.formBuilder.control(null),
-      federalIdType: this.formBuilder.control('Physical', [Validators.required]),
+      gender: this.formBuilder.control(Genero.masculino, [Validators.required]),
+      federalIdType: this.formBuilder.control(TipoPessoa.fisica, [Validators.required]),
       commercialAddress: this.formBuilder.control(null),
       residentialAddress: this.formBuilder.control(null),
       active: this.formBuilder.control(true, [Validators.required])
@@ -63,8 +63,18 @@ export class UsuarioComponent implements OnInit {
           this.usuarioForm.patchValue(usuario)
           this.usuarioForm.get('federalId').disable()
         }
-      )
+        )
     }
+  }
+
+  mascaraCPFCNPJ(): string {
+    let valorAtualCampoCPFCNPJ = this.usuarioForm.get('federalIdType').value;
+    
+    if (valorAtualCampoCPFCNPJ == TipoPessoa.fisica) {
+      return "000.000.000-00"
+    }
+
+    return "00.000.000/0000-00"
   }
 
   static validaCpfCnpj(group: AbstractControl): { [key: string]: boolean } {

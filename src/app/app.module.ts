@@ -6,15 +6,18 @@ import { DataTablesModule } from 'angular-datatables';
 
 import { ROUTES } from './app.routes'
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { SobreComponent } from './sobre/sobre.component';
-import { UsuarioComponent } from './usuarios/usuario/usuario.component';
-import { UsuariosService } from './usuarios/usuarios.service';
-import { HttpModule } from '@angular/http';
-import { InputComponent } from './compartilhado/input/input.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AppComponent } from './app.component'
+import { HeaderComponent } from './header/header.component'
+import { UsuariosComponent } from './usuarios/usuarios.component'
+import { SobreComponent } from './sobre/sobre.component'
+import { UsuarioComponent } from './usuarios/usuario/usuario.component'
+import { UsuariosService } from './usuarios/usuarios.service'
+import { HttpModule } from '@angular/http'
+import { InputComponent } from './compartilhado/input/input.component'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { NgxMaskModule } from 'ngx-mask'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 @NgModule({
   declarations: [
@@ -31,7 +34,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     BrowserModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules}),
-    DataTablesModule
+    DataTablesModule,
+    NgxMaskModule.forRoot({
+      clearIfNotMatch: true
+    }),
+    MatRadioModule,
+    MatSlideToggleModule
   ],
   providers: [UsuariosService],
   bootstrap: [AppComponent]
