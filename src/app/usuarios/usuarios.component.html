@@ -5,13 +5,22 @@
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Lista de Usuários</h3>
-      <button [routerLink]="['/usuarios/novo']" class="btn btn-info pull-right">
+      <button *ngIf="usuarios && usuarios.length > 0" [routerLink]="['/usuarios/novo']" class="btn btn-info pull-right">
         <i class="fa fa-plus"></i> Cadastrar novo usuário
       </button>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-      <table class="table table-bordered table-striped">
+
+      <cad-delay-message *ngIf="!usuarios && !consultado" mensagem=""></cad-delay-message>
+
+      <div [routerLink]="['/usuarios/novo']" *ngIf="usuarios && usuarios.length == 0 " class="alert alert-info alert-dismissible">
+        <h4>
+          <i class="icon fa fa-info"></i> Nenhum usuário cadastrado!</h4>
+        Clique aqui para cadastrar um novo usuário :)
+      </div>
+
+      <table *ngIf="usuarios && usuarios.length > 0" class="table table-bordered table-striped">
         <thead>
           <tr>
             <th>Nome</th>

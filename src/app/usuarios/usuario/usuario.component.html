@@ -1,7 +1,5 @@
 <section class="content-header">
-  <div *ngIf="!usuario && modoEdicao" class="overlay">
-    <i class="fa fa-refresh fa-spin"></i> Carregando informações...
-  </div>
+  <cad-delay-message mensagem="Carregando informações..." *ngIf="!usuario && modoEdicao"></cad-delay-message>
 </section>
 
 <section class="content">
@@ -113,9 +111,7 @@
     </form>
 
     <div class="row">
-      <div *ngIf="delay" class="col-xs-12 overlay">
-        <i class="fa fa-refresh fa-spin"></i> Enviando informações...
-      </div>
+      <cad-delay-message mensagem="Enviando informações..." *ngIf="delay"></cad-delay-message>
       <div *ngIf="!delay" class="col-xs-12">
         <p class="pull-left">Campos Obrigatórios *</p>
         <div class="pull-right">

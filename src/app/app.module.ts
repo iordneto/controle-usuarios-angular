@@ -17,7 +17,8 @@ import { InputComponent } from './compartilhado/input/input.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { NgxMaskModule } from 'ngx-mask'
 import { MatRadioModule } from '@angular/material/radio'
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DelayMessageComponent } from './compartilhado/delay-message/delay-message.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
     UsuariosComponent,
     SobreComponent,
     UsuarioComponent,
-    InputComponent
+    InputComponent,
+    DelayMessageComponent
   ],
   imports: [
     FormsModule, 
