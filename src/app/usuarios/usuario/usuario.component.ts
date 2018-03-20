@@ -15,6 +15,7 @@ export class UsuarioComponent implements OnInit {
 
   usuarioForm: FormGroup
 
+  emailCollectionPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25}(;[ ]{0,1}([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})*$/
   emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   numberPattern = /^[0-9]*$/
   phonePattern = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
@@ -36,7 +37,7 @@ export class UsuarioComponent implements OnInit {
       phone: this.formBuilder.control('', [Validators.required, Validators.pattern(this.phonePattern)]),
       phone2: this.formBuilder.control('', [Validators.pattern(this.phonePattern)]),
       email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
-      emailCollection: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
+      emailCollection: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailCollectionPattern)]),
       residencialPhone: this.formBuilder.control('', [Validators.pattern(this.phonePattern)]),
       commercialPhone: this.formBuilder.control('', [Validators.pattern(this.phonePattern)]),
       emergencyContact: this.formBuilder.control(null),
@@ -48,8 +49,7 @@ export class UsuarioComponent implements OnInit {
       residentialAddress: this.formBuilder.control(null),
       active: this.formBuilder.control(true, [Validators.required])
     }, {
-        validators: [UsuarioComponent.validaCpfCnpj,
-        UsuarioComponent.validaTipoPessoa]
+        validators: [UsuarioComponent.validaTipoPessoa]
       })
   }
 
@@ -69,7 +69,7 @@ export class UsuarioComponent implements OnInit {
 
   mascaraCPFCNPJ(): string {
     let valorAtualCampoCPFCNPJ = this.usuarioForm.get('federalIdType').value;
-    
+
     if (valorAtualCampoCPFCNPJ == TipoPessoa.fisica) {
       return "000.000.000-00"
     }
@@ -77,11 +77,43 @@ export class UsuarioComponent implements OnInit {
     return "00.000.000/0000-00"
   }
 
+  limpaCpfCnpj(): void {
+    this.usuarioForm.get('federalId').setValue('')
+  }
+
   static validaCpfCnpj(group: AbstractControl): { [key: string]: boolean } {
     return undefined
   }
 
   static validaTipoPessoa(group: AbstractControl): { [key: string]: boolean } {
+    const genero = group.get('gender').value
+
+    if (!genero) {
+      return undefined
+    }
+
+    if ((genero != Genero.masculino && genero != Genero.feminino)) {
+      return { generoInexistente: true }
+    }
+
+    return undefined
+  }
+
+  static validaEmailsDeCobranca(group: AbstractControl): { [key: string]: boolean } {
+    const emailsDeCobranca = group.get('emailCollection').value
+
+    if (!emailsDeCobranca) {
+      return undefined
+    }
+
+    if (emailsDeCobranca.contains(';')) {
+      let arrayEmails = emailsDeCobranca.split(';')
+      arrayEmails.forEach(email => {
+        if (email.match(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i))
+          return { emailDeCobrancaInvalido: true }
+      });
+    }
+
     return undefined
   }
 
@@ -93,6 +125,7 @@ export class UsuarioComponent implements OnInit {
         })
 
     } else {
+      delete usuario.id
       this.usuariosService.inserir(usuario)
         .subscribe(usuario => {
           this.router.navigate(['/usuarios'])

@@ -3,7 +3,7 @@
 
 <section class="content">
   <section class="invoice">
-
+    
     <form [formGroup]="usuarioForm" novalidate>
       <div class="row">
         <div class="col-xs-12">
@@ -15,7 +15,7 @@
 
       <div class="row linhaStatus">
         <div class="col-sm-6 col-xs-12">
-          <mat-slide-toggle formControlName="active" class="example-margin" [color]="accent" [checked]="usuarioForm.controls.active.value">
+          <mat-slide-toggle formControlName="active" class="example-margin" [checked]="usuarioForm.controls.active.value">
             {{usuarioForm.controls.active.value ? "Ativo" : "Inativo"}}
           </mat-slide-toggle>
         </div>
@@ -25,8 +25,8 @@
         <div class="col-sm-1 col-xs-12">
           <cad-input-container errorMessage="Deve ser escolhido CPF ou CNPJ" label="Nome">
             <mat-radio-group formControlName="federalIdType">
-              <mat-radio-button value="Physical">CPF</mat-radio-button><br>
-              <mat-radio-button value="Juridical">CNPJ</mat-radio-button>
+              <mat-radio-button (click)="limpaCpfCnpj()" value="Physical">CPF</mat-radio-button><br>
+              <mat-radio-button (click)="limpaCpfCnpj()" value="Juridical">CNPJ</mat-radio-button>
             </mat-radio-group>
           </cad-input-container>
         </div>
@@ -39,7 +39,7 @@
 
         <div class="col-sm-4 col-xs-6">
           <cad-input-container errorMessage="CPF/CNPJ inválido" label="CPF/CNPJ">
-            <input type="text" class="form-control" formControlName="federalId" placeholder="CPF/CNPJ *" autocomplete="off" [mask]="mascaraCPFCNPJ()" >
+            <input type="text" class="form-control" formControlName="federalId" placeholder="CPF/CNPJ *" autocomplete="off" dropSpecialCharacters="false" [mask]="mascaraCPFCNPJ()" >
           </cad-input-container>
         </div>
 
